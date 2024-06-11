@@ -22,7 +22,6 @@ import static apijson.framework.APIJSONConstant.VISITOR_ID;
 import java.rmi.ServerException;
 import java.util.*;
 
-import jakarta.servlet.http.HttpSession;
 
 import apijson.column.ColumnUtil;
 import apijson.orm.*;

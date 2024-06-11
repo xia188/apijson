@@ -21,8 +21,6 @@ import static apijson.framework.APIJSONConstant.VERSION;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.servlet.http.HttpSession;
-
 import com.alibaba.fastjson.JSONObject;
 
 import apijson.NotNull;

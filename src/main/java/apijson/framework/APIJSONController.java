@@ -36,11 +36,6 @@ import java.lang.reflect.Method;
 import java.rmi.ServerException;
 import java.util.Map;
 
-import jakarta.servlet.AsyncContext;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 import com.alibaba.fastjson.JSONObject;
 
 import apijson.JSON;
@@ -419,55 +414,55 @@ public class APIJSONController<T extends Object> {
 		return MethodUtil.listMethod(request);
 	}
 
-	public void invokeMethod(String request, HttpServletRequest servletRequest) {
-		AsyncContext asyncContext = servletRequest.startAsync();
-
-		final boolean[] called = new boolean[] { false };
-		MethodUtil.Listener<JSONObject> listener = new MethodUtil.Listener<JSONObject>() {
-
-			@Override
-			public void complete(JSONObject data, Method method, InterfaceProxy proxy, Object... extras) throws Exception {
-				
-				ServletResponse servletResponse = called[0] ? null : asyncContext.getResponse();
-				if (servletResponse == null) {  //  || servletResponse.isCommitted()) {  // isCommitted 在高并发时可能不准，导致写入多次
-                    			Log.w(TAG, "invokeMethod  listener.complete  servletResponse == null || servletResponse.isCommitted() >> return;");
-                    			return;
-				}
-				called[0] = true;
-
-				servletResponse.setCharacterEncoding(servletRequest.getCharacterEncoding());
-				servletResponse.setContentType(servletRequest.getContentType());
-				servletResponse.getWriter().println(data);
-				asyncContext.complete();
-			}
-		};
-		
-		if (Log.DEBUG == false) {
-			try {
-				listener.complete(MethodUtil.JSON_CALLBACK.newErrorResult(new IllegalAccessException("非 DEBUG 模式下不允许使用 UnitAuto 单元测试！")));
-			}
-			catch (Exception e1) {
-				e1.printStackTrace();
-				asyncContext.complete();
-			}
-			
-			return;
-		}
-		
-
-		try {
-			MethodUtil.invokeMethod(request, null, listener);
-		}
-		catch (Exception e) {
-			Log.e(TAG, "invokeMethod  try { JSONObject req = JSON.parseObject(request); ... } catch (Exception e) { \n" + e.getMessage());
-			try {
-				listener.complete(MethodUtil.JSON_CALLBACK.newErrorResult(e));
-			}
-			catch (Exception e1) {
-				e1.printStackTrace();
-				asyncContext.complete();
-			}
-		}
-	}
+//	public void invokeMethod(String request, HttpServletRequest servletRequest) {
+//		AsyncContext asyncContext = servletRequest.startAsync();
+//
+//		final boolean[] called = new boolean[] { false };
+//		MethodUtil.Listener<JSONObject> listener = new MethodUtil.Listener<JSONObject>() {
+//
+//			@Override
+//			public void complete(JSONObject data, Method method, InterfaceProxy proxy, Object... extras) throws Exception {
+//				
+//				ServletResponse servletResponse = called[0] ? null : asyncContext.getResponse();
+//				if (servletResponse == null) {  //  || servletResponse.isCommitted()) {  // isCommitted 在高并发时可能不准，导致写入多次
+//                    			Log.w(TAG, "invokeMethod  listener.complete  servletResponse == null || servletResponse.isCommitted() >> return;");
+//                    			return;
+//				}
+//				called[0] = true;
+//
+//				servletResponse.setCharacterEncoding(servletRequest.getCharacterEncoding());
+//				servletResponse.setContentType(servletRequest.getContentType());
+//				servletResponse.getWriter().println(data);
+//				asyncContext.complete();
+//			}
+//		};
+//		
+//		if (Log.DEBUG == false) {
+//			try {
+//				listener.complete(MethodUtil.JSON_CALLBACK.newErrorResult(new IllegalAccessException("非 DEBUG 模式下不允许使用 UnitAuto 单元测试！")));
+//			}
+//			catch (Exception e1) {
+//				e1.printStackTrace();
+//				asyncContext.complete();
+//			}
+//			
+//			return;
+//		}
+//		
+//
+//		try {
+//			MethodUtil.invokeMethod(request, null, listener);
+//		}
+//		catch (Exception e) {
+//			Log.e(TAG, "invokeMethod  try { JSONObject req = JSON.parseObject(request); ... } catch (Exception e) { \n" + e.getMessage());
+//			try {
+//				listener.complete(MethodUtil.JSON_CALLBACK.newErrorResult(e));
+//			}
+//			catch (Exception e1) {
+//				e1.printStackTrace();
+//				asyncContext.complete();
+//			}
+//		}
+//	}
 
 }
