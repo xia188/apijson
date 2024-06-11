@@ -206,6 +206,9 @@ public abstract class AbstractSQLExecutor<T extends Object> implements SQLExecut
 				+ "; schema = " + StringUtil.getString(config.getSchema())
 				+ "; sql = \n" + sql
 				+ "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+		if(!Log.DEBUG) {
+			System.out.println(sql);
+		}
 
 		ResultSet rs = null;
 		List<JSONObject> resultList = null;
@@ -1200,7 +1203,7 @@ public abstract class AbstractSQLExecutor<T extends Object> implements SQLExecut
 		if (connection == null || connection.isClosed()) {
 			Log.i(TAG, "select  connection " + (connection == null ? " = null" : ("isClosed = " + connection.isClosed()))) ;
 			// PostgreSQL 不允许 cross-database
-			connection = DriverManager.getConnection(config.getDBUri(), config.getDBAccount(), config.getDBPassword());
+			connection = doGetConnection(config);
 			connectionMap.put(connectionKey, connection);
 		}
 
@@ -1211,6 +1214,10 @@ public abstract class AbstractSQLExecutor<T extends Object> implements SQLExecut
 		}
 
 		return connection;
+	}
+	
+	public Connection doGetConnection(SQLConfig<T> config) throws Exception {
+		return DriverManager.getConnection(config.getDBUri(), config.getDBAccount(), config.getDBPassword());
 	}
 
 	//事务处理 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
