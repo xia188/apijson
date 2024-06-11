@@ -22,7 +22,10 @@ public class DemoApp extends ExternalResource {
 		Log.DEBUG = false;
 		// 控制初始化时的三步检查
 		APIJSONVerifier.ENABLE_VERIFY_ROLE = true;
-		APIJSONFunctionParser.ENABLE_REMOTE_FUNCTION = false;
+		APIJSONFunctionParser.ENABLE_REMOTE_FUNCTION = true;
+		// https://github.com/Tencent/APIJSON/issues/647，script.sql脚本不存在
+		// https://github.com/APIJSON/APIJSON-Demo/blob/master/MySQL/single/sys_Script.sql
+		APIJSONFunctionParser.ENABLE_SCRIPT_FUNCTION = false;
 		APIJSONVerifier.ENABLE_VERIFY_CONTENT = false;
 		try {
 			APIJSONApplication.init(false, new DemoCreator());

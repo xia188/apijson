@@ -66,7 +66,7 @@ public class APIJSONApplication {
 	 * @throws Exception
 	 */
 	public static <T extends Object> void init(boolean shutdownWhenServerError, @NotNull APIJSONCreator<T> creator) throws Exception {
-		System.out.println("\n\n\n\n\n<<<<<<<<<<<<<<<<<<<<<<<<< APIJSON 开始启动 >>>>>>>>>>>>>>>>>>>>>>>>\n");
+//		System.out.println("\n\n\n\n\n<<<<<<<<<<<<<<<<<<<<<<<<< APIJSON 开始启动 >>>>>>>>>>>>>>>>>>>>>>>>\n");
 		DEFAULT_APIJSON_CREATOR = creator;
 
 		// 统一用同一个 creator
@@ -140,10 +140,10 @@ public class APIJSONApplication {
 
 
 
-		System.out.println("官方网站： http://apijson.cn");
-		System.out.println("设计规范： https://github.com/Tencent/APIJSON/blob/master/Document.md#3");
-		System.out.println("测试链接： http://apijson.cn/api?type=JSON&url=http://localhost:8080/get");
-		System.out.println("\n\n<<<<<<<<<<<<<<<<<<<<<<<<< APIJSON 启动完成，试试调用零代码万能通用 API 吧 ^_^ >>>>>>>>>>>>>>>>>>>>>>>>\n");
+//		System.out.println("官方网站： http://apijson.cn");
+//		System.out.println("设计规范： https://github.com/Tencent/APIJSON/blob/master/Document.md#3");
+//		System.out.println("测试链接： http://apijson.cn/api?type=JSON&url=http://localhost:8080/get");
+//		System.out.println("\n\n<<<<<<<<<<<<<<<<<<<<<<<<< APIJSON 启动完成，试试调用零代码万能通用 API 吧 ^_^ >>>>>>>>>>>>>>>>>>>>>>>>\n");
 	}
 	
 	protected static void onServerError(String msg, boolean shutdown) throws ServerException {

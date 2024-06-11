@@ -10,4 +10,5 @@ APIJSONSQLExecutor依赖postgresql，调整代码以便缺少相关类时也可�
 ### 初始化检查
 
 1，APIJSONVerifier.ENABLE_VERIFY_ROLE启用方法+表+权限检查，读取Access表到ACCESS_MAP，APIJSONParser.isNeedVerifyRole可绕过
+2，APIJSONFunctionParser.ENABLE_REMOTE_FUNCTION启用远程函数检查，读取Function表到FUNCTION_MAP，script.sql没走通暂时禁掉
 
