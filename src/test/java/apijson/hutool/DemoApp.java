@@ -26,7 +26,7 @@ public class DemoApp extends ExternalResource {
 		// https://github.com/Tencent/APIJSON/issues/647，script.sql脚本不存在
 		// https://github.com/APIJSON/APIJSON-Demo/blob/master/MySQL/single/sys_Script.sql
 		APIJSONFunctionParser.ENABLE_SCRIPT_FUNCTION = false;
-		APIJSONVerifier.ENABLE_VERIFY_CONTENT = false;
+		APIJSONVerifier.ENABLE_VERIFY_CONTENT = true;
 		try {
 			APIJSONApplication.init(false, new DemoCreator());
 		} catch (Exception e) {
