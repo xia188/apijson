@@ -124,4 +124,24 @@ public class DemoController extends APIJSONController<Long> {
 			return DemoParser.newErrorResult(e);
 		}
 	}
+
+	/**
+	 * 重载配置，需要登录管理员权限
+	 * 
+	 * @param request {"type":"ALL"}，重载对象，ALL, FUNCTION, REQUEST, ACCESS，非必须
+	 * @param session
+	 */
+	public JSONObject reload(String request, HttpSession session) {
+		JSONObject requestObject = null;
+		String type;
+		try {
+			// 要求管理员权限，不同于demo里校验码的方式
+			DemoVerifier.verifyAdmin(session);
+			requestObject = DemoParser.parseRequest(request);
+			type = requestObject.getString(TYPE);
+			return super.reload(type);
+		} catch (Exception e) {
+			return DemoParser.extendErrorResult(requestObject, e);
+		}
+	}
 }

@@ -22,6 +22,9 @@ public class DemoTest {
 
 	@Test
 	public void testGet() {
+		// DemoApp.init必须启用APIJSONVerifier.ENABLE_VERIFY_ROLE，否则所有表数据都可能被删除
+//		json = new JSONObject().set("tag", "Access").set("Access", new JSONObject().set("id", "1")).toString();
+//		HttpRequest.post(host + "/delete").body(json).execute().body();
 		// {"Access":{"id":"1"}}
 		json = new JSONObject().set("Access", new JSONObject().set("id", "1")).toString();
 		HttpRequest.post(get).body(json).execute().body();

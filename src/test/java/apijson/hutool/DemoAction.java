@@ -31,6 +31,9 @@ public class DemoAction implements Action {
 			case "logout":
 				body = apijson.logout(session).toJSONString();
 				break;
+			case "reload":
+				body = apijson.reload(body, session).toJSONString();
+				break;
 			default:
 				body = apijson.crud(method, body, session);
 				break;

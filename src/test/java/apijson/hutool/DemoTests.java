@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import apijson.demo.DemoVerifier;
 import cn.hutool.core.lang.Console;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
@@ -23,6 +24,17 @@ public class DemoTests {
 		// Request表配置了{"MUST": "id"}，且id只能是自己的（用别人的会抛异常）
 		json = "{\"Privacy\":{\"id\":38710},\"tag\":\"Privacy\"}";
 		post(host + "/gets", json);
+	}
+
+	@Test
+	public void testReload() {
+		// 非管理员，reload失败
+		json = "{\"reload\":\"ALL\"}";
+		post(host + "/reload", json);
+		// 是管理员，reload成功
+		DemoVerifier.adminUserId = 38710L;
+		json = "{\"reload\":\"ALL\"}";
+		post(host + "/reload", json);
 	}
 
 	@Before
