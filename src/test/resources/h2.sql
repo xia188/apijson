@@ -148,3 +148,46 @@ INSERT INTO `request` VALUES ('52','0','2','POST','Flow','{"MUST": "deviceId,sys
 INSERT INTO `request` VALUES ('53','0','4','GETS','Privacy','{"MUST": "id", "INSERT": {"@role": "OWNER"}, "REFUSE": "!"}',null,'2017-06-12 16:05:51');
 INSERT INTO `request` VALUES ('54','0','2','POST','Output','{"MUST": "inputId", "INSERT": {"@role": "OWNER"}, "REFUSE": "id"}',null,'2018-06-16 23:44:36');
 INSERT INTO `request` VALUES ('55','0','2','DELETE','Output','{"MUST": "id", "INSERT": {"@role": "OWNER"}}',null,'2017-11-25 16:36:20');
+
+DROP TABLE IF EXISTS `apijson_privacy`;
+CREATE TABLE `apijson_privacy` (
+  `id` bigint(15) NOT NULL COMMENT '唯一标识',
+  `certified` tinyint(2) NOT NULL DEFAULT '0' COMMENT '已认证',
+  `phone` bigint(11) NOT NULL COMMENT '手机号，仅支持 11 位数的。不支持 +86 这种国家地区开头的。如果要支持就改为 VARCHAR(14)',
+  `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
+  `_password` varchar(20) NOT NULL COMMENT '登录密码',
+  `_payPassword` int(6) NOT NULL DEFAULT '123456' COMMENT '支付密码',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `phone_UNIQUE` (`phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户隐私信息表。\n对安全要求高，不想泄漏真实名称。对外名称为 Privacy';
+
+INSERT INTO `apijson_privacy` VALUES ('38710', '1', '13000038710', '33376.00', '666666', '123456');
+INSERT INTO `apijson_privacy` VALUES ('70793', '0', '13000070793', '56000.00', 'apijson', '123456');
+INSERT INTO `apijson_privacy` VALUES ('82001', '1', '13000082001', '99867.38', '123456', '123456');
+
+DROP TABLE IF EXISTS `apijson_user`;
+CREATE TABLE `apijson_user` (
+  `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `sex` tinyint(2) NOT NULL DEFAULT '0' COMMENT '性别：\n0-男\n1-女',
+  `name` varchar(20) NOT NULL COMMENT '名称',
+  `tag` varchar(45) DEFAULT NULL COMMENT '标签',
+  `head` varchar(300) DEFAULT 'https://raw.githubusercontent.com/TommyLemon/StaticResources/master/APIJSON_Logo.png' COMMENT '头像url',
+  `contactIdList` mediumtext COMMENT '联系人id列表',
+  `pictureList` mediumtext COMMENT '照片列表',
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1571629309521 DEFAULT CHARSET=utf8 COMMENT='用户公开信息表。\n对安全要求高，不想泄漏真实名称。对外名称为 User';
+
+INSERT INTO `apijson_user` VALUES ('38710', '0', 'TommyLemon', 'Android&Java', 'http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000', '[70793]', '[\"http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000\", \"http://common.cnblogs.com/images/icon_weibo_24.png\"]', '2017-02-01 19:21:50');
+INSERT INTO `apijson_user` VALUES ('70793', '0', 'Strong', 'djdj', 'http://static.oschina.net/uploads/user/585/1170143_50.jpg?t=1390226446000', '[38710]', '[\"http://static.oschina.net/uploads/img/201604/22172508_eGDi.jpg\"]', '2017-02-01 19:21:50');
+INSERT INTO `apijson_user` VALUES ('82001', '0', '测试账号', 'Dev', 'https://static.oschina.net/uploads/user/19/39085_50.jpg', '[93793]', '[\"http://common.cnblogs.com/images/icon_weibo_24.png\"]', '2017-02-01 19:21:50');
+
+DROP TABLE IF EXISTS `verify`;
+CREATE TABLE `verify` (
+  `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `type` int(2) NOT NULL DEFAULT '0' COMMENT '类型：\n0-登录\n1-注册\n2-修改登录密码\n3-修改支付密码',
+  `phone` bigint(11) NOT NULL COMMENT '手机号',
+  `verify` int(6) NOT NULL COMMENT '验证码',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1590930499668 DEFAULT CHARSET=utf8;
