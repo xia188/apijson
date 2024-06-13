@@ -26,5 +26,6 @@ APIJSONSQLExecutor依赖postgresql，调整代码以便缺少相关类时也可�
 /get，{"Access[]":{"Access":{}}}
 /head，{"Access":{}}
 /login，{"phone":"13000038710","password":"666666"}
+/gets/Privacy，{"id":"38710"}，需要登录且只能查自己，并且需要在Request配置structure
 /reload，{"type":"REQUEST"}，ALL, FUNCTION, REQUEST, ACCESS
 

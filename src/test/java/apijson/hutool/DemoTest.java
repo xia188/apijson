@@ -28,6 +28,9 @@ public class DemoTest {
 		// {"Access":{"id":"1"}}
 		json = new JSONObject().set("Access", new JSONObject().set("id", "1")).toString();
 		HttpRequest.post(get).body(json).execute().body();
+		// get/Access[]
+		json = "{\"Access\":{}}";
+		HttpRequest.post(get + "/Access[]").body(json).execute().body();
 	}
 
 	@Test

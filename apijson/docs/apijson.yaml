@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: apijson
+  description: |-
+    {method}: get | head | gets | heads | post | put | delete
+    <br>{tag}: Access | Function | Request | Privacy | User
+servers:
+- url: http://localhost:8080/
+paths:
+  /{method}:
+    post:
+      description: |-
+        get: {"Access[]":{"Access":{}}}
+        <br>head: {"Access":{}}
+        <br>login: {"phone":"13000038710","password":"666666"}，登录后可以拿到token
+      parameters:
+       - name: method
+         in: path
+         required: true
+         example: get
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: {"Access":{"id":"1"}}
+      security:
+        - api_key: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+  /{method}/{tag}:
+    post:
+      description: |-
+        get/Access[]: {"Access":{}}，省去了外层的Access[]
+        <br>gets/Privacy: {"id":"38710"}，需要登录
+      parameters:
+       - name: method
+         in: path
+         required: true
+         example: get
+       - name: tag
+         in: path
+         required: true
+         example: Access[]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: {"Access":{}}
+      security:
+        - api_key: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header

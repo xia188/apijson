@@ -20,8 +20,13 @@ public class DemoAction implements Action {
 	public void doAction(HttpServerRequest request, HttpServerResponse response) throws IOException {
 		Console.log("{} {}", request.getMethod(), request.getPath());
 		if (request.isPostMethod()) {
-			String method = StrUtil.trimToEmpty(request.getPath());
+			String method = StrUtil.trimToEmpty(request.getPath()), tag = null;
 			method = method.startsWith("/") ? method.substring(1) : method;
+			int slash = method.indexOf('/');
+			if (slash > 0) {
+				tag = method.substring(slash + 1);
+				method = method.substring(0, slash);
+			}
 			String body = request.getBody();
 			Console.log(body);
 			HttpSession session = getSession(request);
@@ -36,7 +41,11 @@ public class DemoAction implements Action {
 				body = apijson.reload(body, session).toJSONString();
 				break;
 			default:
-				body = apijson.crud(method, body, session);
+				if (StrUtil.isBlank(tag)) {
+					body = apijson.crud(method, body, session);
+				} else {
+					body = apijson.crudByTag(method, tag, null, body, session);
+				}
 				break;
 			}
 			Console.log(body);
