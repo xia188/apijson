@@ -178,9 +178,9 @@ CREATE TABLE `apijson_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1571629309521 DEFAULT CHARSET=utf8 COMMENT='用户公开信息表。\n对安全要求高，不想泄漏真实名称。对外名称为 User';
 
-INSERT INTO `apijson_user` VALUES ('38710', '0', 'TommyLemon', 'Android&Java', 'http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000', '[70793]', '[\"http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000\", \"http://common.cnblogs.com/images/icon_weibo_24.png\"]', '2017-02-01 19:21:50');
-INSERT INTO `apijson_user` VALUES ('70793', '0', 'Strong', 'djdj', 'http://static.oschina.net/uploads/user/585/1170143_50.jpg?t=1390226446000', '[38710]', '[\"http://static.oschina.net/uploads/img/201604/22172508_eGDi.jpg\"]', '2017-02-01 19:21:50');
-INSERT INTO `apijson_user` VALUES ('82001', '0', '测试账号', 'Dev', 'https://static.oschina.net/uploads/user/19/39085_50.jpg', '[93793]', '[\"http://common.cnblogs.com/images/icon_weibo_24.png\"]', '2017-02-01 19:21:50');
+INSERT INTO `apijson_user` VALUES ('38710', '0', 'TommyLemon', 'Android&Java', 'http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000', '[70793]', '["http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000", "http://common.cnblogs.com/images/icon_weibo_24.png"]', '2017-02-01 19:21:50');
+INSERT INTO `apijson_user` VALUES ('70793', '0', 'Strong', 'djdj', 'http://static.oschina.net/uploads/user/585/1170143_50.jpg?t=1390226446000', '[38710]', '["http://static.oschina.net/uploads/img/201604/22172508_eGDi.jpg"]', '2017-02-01 19:21:50');
+INSERT INTO `apijson_user` VALUES ('82001', '0', '测试账号', 'Dev', 'https://static.oschina.net/uploads/user/19/39085_50.jpg', '[93793]', '["http://common.cnblogs.com/images/icon_weibo_24.png"]', '2017-02-01 19:21:50');
 
 DROP TABLE IF EXISTS `verify`;
 CREATE TABLE `verify` (

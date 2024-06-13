@@ -29,11 +29,11 @@ public class DemoTests {
 	@Test
 	public void testReload() {
 		// 非管理员，reload失败
-		json = "{\"reload\":\"ALL\"}";
+		json = "{\"type\":\"ALL\"}";
 		post(host + "/reload", json);
 		// 是管理员，reload成功
 		DemoVerifier.adminUserId = 38710L;
-		json = "{\"reload\":\"ALL\"}";
+		json = "{\"type\":\"ALL\"}";
 		post(host + "/reload", json);
 	}
 

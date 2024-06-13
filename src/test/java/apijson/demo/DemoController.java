@@ -1,5 +1,6 @@
 package apijson.demo;
 
+import static apijson.RequestMethod.GETS;
 import static apijson.framework.APIJSONConstant.FORMAT;
 import static apijson.framework.APIJSONConstant.USER_ID;
 import static apijson.framework.APIJSONConstant.VERSION;
@@ -13,8 +14,6 @@ import apijson.demo.model.Verify;
 import apijson.framework.APIJSONController;
 import apijson.framework.HttpSession;
 import apijson.orm.exception.ConditionErrorException;
-import cn.hutool.db.Db;
-import cn.hutool.db.Entity;
 
 public class DemoController extends APIJSONController<Long> {
 
@@ -41,7 +40,7 @@ public class DemoController extends APIJSONController<Long> {
 	/**
 	 * 登录：必填phone,password，全局参数在登录后的请求都生效
 	 * 
-	 * @param body    {"phone":"13000038710","password":"66666"},type=0密码1验证码,version+format+defaults全局参数
+	 * @param body    {"phone":"13000038710","password":"666666"},type=0密码1验证码,version+format+defaults全局参数
 	 * @param session
 	 */
 	public JSONObject login(String body, HttpSession session) {
@@ -80,17 +79,16 @@ public class DemoController extends APIJSONController<Long> {
 			requestObject.remove(FORMAT);
 			requestObject.remove(REMEMBER);
 			requestObject.remove(DEFAULTS);
+			
+			body = "{\"Privacy\":{\"phone\":\"%s\",\"_password\":\"%s\"},\"User\":{\"id@\":\"/Privacy/id\"}}";
+			JSONObject response = new DemoParser(GETS, false).parseResponse(String.format(body, phone, password));
 
-			// 根据熟练程度考虑是否参照示例以json的方式查库，这里使用hutool.db直接联表查询更简单，密码可以考虑hash保密，verify验证码暂不实现
-			Entity entity = Db.use().queryOne(
-					"select * from apijson_user u left join apijson_privacy p on u.id=p.id where p.phone=? and p._password=?",
-					phone, password);
-			if (entity == null) {
+			User user = response.getObject("User", User.class);
+			Privacy privacy = response.getObject("Privacy", Privacy.class);
+			
+			if (user == null) {
 				return DemoParser.newErrorResult(new ConditionErrorException("账号或密码错误"));
 			}
-
-			User user = entity.toBean(User.class);
-			Privacy privacy = entity.toBean(Privacy.class);
 
 			// 可以使用hutool.jwt计算token
 			String jwt = "" + user.getId();
@@ -104,9 +102,6 @@ public class DemoController extends APIJSONController<Long> {
 			session.setAttribute(PRIVACY_, privacy); // 用户隐私信息
 			session.setAttribute(REMEMBER, remember); // 是否记住登录
 
-			JSONObject response = new JSONObject();
-			response.put(USER_, user);
-			response.put(PRIVACY_, privacy);
 			response.put(REMEMBER, remember);
 			response.put(DEFAULTS, defaults);
 			response.put(TOKEN, jwt);

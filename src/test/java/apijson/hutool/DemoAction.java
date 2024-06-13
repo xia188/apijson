@@ -8,6 +8,7 @@ import apijson.framework.HttpSession;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Header;
+import cn.hutool.http.Method;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.http.server.action.Action;
@@ -39,7 +40,12 @@ public class DemoAction implements Action {
 				break;
 			}
 			Console.log(body);
+			CorsUtil.addCorsHeader(request, response);
+			response.addHeader("Content-Type", "application/json");
 			response.write(body);
+		} else if (Method.OPTIONS.name().equalsIgnoreCase(request.getMethod())) {
+			CorsUtil.addCorsHeader(request, response);
+			response.sendOk();
 		} else {
 			response.write("必须是post请求");
 		}

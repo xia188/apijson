@@ -19,3 +19,12 @@ APIJSONSQLExecutor依赖postgresql，调整代码以便缺少相关类时也可�
 2，登录之后会有会话session，gets、heads允许LOGIN访问即可安全查询，post可新增数据
 3，put、delete允许OWNER即可安全更新和删除，ADMIN默认拥有所有操作权限（但必须重写AbstractVerifier.verifyAdmin）
 4，管理员可通过DemoVerifier.adminUserId指定，-Dapijson.adminUserId=0谁都不是管理员，管理员可执行reload重载操作
+5，MySQL老版本不支持json类型，使用mediumtext或varchar(1000)替代，-Dapijson.correctJson=true在DemoParser修复apijson返回的json
+
+### 请求报文
+
+/get，{"Access[]":{"Access":{}}}
+/head，{"Access":{}}
+/login，{"phone":"13000038710","password":"666666"}
+/reload，{"type":"REQUEST"}，ALL, FUNCTION, REQUEST, ACCESS
+
