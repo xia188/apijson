@@ -113,7 +113,9 @@ public class DemoController extends APIJSONController<Long> {
 
 	public JSONObject logout(HttpSession session) {
 		try {
-			super.logout(session);
+			if (session != null) {
+				super.logout(session);
+			}
 			return DemoParser.newSuccessResult();
 		} catch (Exception e) {
 			return DemoParser.newErrorResult(e);

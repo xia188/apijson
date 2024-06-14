@@ -1,5 +1,6 @@
 package apijson.hutool;
 
+import java.io.File;
 import java.io.IOException;
 
 import apijson.demo.DemoController;
@@ -12,14 +13,16 @@ import cn.hutool.http.Method;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.http.server.action.Action;
+import cn.hutool.http.server.action.RootAction;
 
 public class DemoAction implements Action {
 	private static DemoController apijson = new DemoController();
+	private static RootAction root = new RootAction(new File("apijson/APIAuto"));
 
 	@Override
 	public void doAction(HttpServerRequest request, HttpServerResponse response) throws IOException {
-		Console.log("{} {}", request.getMethod(), request.getPath());
 		if (request.isPostMethod()) {
+			Console.log("{} {}", request.getMethod(), request.getPath());
 			String method = StrUtil.trimToEmpty(request.getPath()), tag = null;
 			method = method.startsWith("/") ? method.substring(1) : method;
 			int slash = method.indexOf('/');
@@ -52,6 +55,8 @@ public class DemoAction implements Action {
 			CorsUtil.addCorsHeader(request, response);
 			response.addHeader("Content-Type", "application/json");
 			response.write(body);
+		}else if(Method.GET.name().equalsIgnoreCase(request.getMethod())) {
+			root.doAction(request, response);
 		} else if (Method.OPTIONS.name().equalsIgnoreCase(request.getMethod())) {
 			CorsUtil.addCorsHeader(request, response);
 			response.sendOk();
