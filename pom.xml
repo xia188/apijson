@@ -16,8 +16,6 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.test.skip>true</maven.test.skip>
-		<project.main.class>apijson.App</project.main.class>
 	</properties>
 
 	<dependencies>
@@ -61,7 +59,7 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-			<version>5.1.0</version>
+			<version>4.0.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -74,20 +72,5 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>${project.main.class}</mainClass>
-							<addClasspath>true</addClasspath>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 </project>

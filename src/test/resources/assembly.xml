@@ -1,0 +1,31 @@
+<assembly>
+	<formats>
+		<!--支持 zip，tar，tar.gz，tar.bz2，jar，dir，war 等 -->
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet>
+			<directory>apijson/APIAuto</directory>
+			<outputDirectory>/apijson/APIAuto</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>target</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>apijson.jar</include>
+				<include>apijson-tests.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>target/dependency</directory>
+			<outputDirectory>/dependency</outputDirectory>
+			<includes>
+				<include>hutool-all-*.jar</include>
+				<include>fastjson-*.jar</include>
+				<include>slf4j-api-*.jar</include>
+				<include>h2-*.jar</include>
+				<include>HikariCP-*.jar</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>

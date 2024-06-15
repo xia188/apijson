@@ -3,7 +3,6 @@ package apijson.hutool;
 import java.sql.Connection;
 
 import org.h2.tools.Server;
-import org.junit.rules.ExternalResource;
 
 import apijson.Log;
 import apijson.demo.DemoCreator;
@@ -16,7 +15,7 @@ import cn.hutool.db.ds.GlobalDSFactory;
 import cn.hutool.http.HttpStatus;
 import cn.hutool.http.server.SimpleServer;
 
-public class DemoApp extends ExternalResource {
+public class DemoApp {
 	static SimpleServer server;
 
 	public static void main(String[] args) {
@@ -24,7 +23,7 @@ public class DemoApp extends ExternalResource {
 	}
 
 	public static void init() {
-		Log.DEBUG = false;
+		Log.DEBUG = Boolean.getBoolean("apijson.debug");
 		// 控制初始化时的三步检查
 		APIJSONVerifier.ENABLE_VERIFY_ROLE = true;
 		APIJSONFunctionParser.ENABLE_REMOTE_FUNCTION = true;

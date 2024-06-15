@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Built-By: Administrator
+Class-Path: apijson.jar dependency/fastjson-1.2.83.jar dependency/h2-2.2.224.jar dependency/HikariCP-4.0.3.jar dependency/hutool-all-5.8.28.jar dependency/slf4j-api-1.7.30.jar
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_92
+Main-Class: apijson.hutool.DemoApp
+
